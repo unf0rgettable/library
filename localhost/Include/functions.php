@@ -118,6 +118,45 @@
 		return $result;
 	}
 
+	function add_book_by_login($login,$book_id){
+		global $db;
+
+		$find = 'SELECT my_books FROM users WHERE "'.$login.'" = Login';
+
+		$asd .= implode (mysqli_fetch_assoc(mysqli_query($db, $find)));
+		$asd .= $book_id;
+		$asd .= ",";
+		$sql = 'UPDATE users SET my_books = "'.$asd.'"  WHERE "'.$login.'" = Login';
+
+		$result = mysqli_query($db, $sql);
+
+		return $result;
+	}
+
+	function get_books_by_login($login){
+		global $db;
+
+		$sql = 'SELECT my_books FROM users WHERE "'.$login.'" = Login';
+
+		$result = implode (mysqli_fetch_assoc(mysqli_query($db, $sql)));
+
+		$result = str_replace(',', '', $result);
+
+		$result_1 = str_split($result);
+
+		return $result_1;
+	}
+
+	function minus_one_book($book_id){
+		global $db;
+
+		$sql = 'UPDATE books SET kolvo = kolvo - 1 WHERE Id = "'.$book_id.'"';
+
+		$result = mysqli_query($db, $sql);
+
+		return $result;
+	}
+
 	function search_email($email){
 		global $db;
 
